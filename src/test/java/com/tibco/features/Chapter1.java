@@ -12,7 +12,7 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
-public class Chapter1Test {
+public class Chapter1 {
 
     @Test
     void test_1() {
