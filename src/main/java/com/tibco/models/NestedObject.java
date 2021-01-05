@@ -8,5 +8,4 @@ import java.util.Map;
 public class NestedObject {
     private Map<String, Object> data;
     private String string;
-
 }

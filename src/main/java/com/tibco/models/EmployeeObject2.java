@@ -10,5 +10,4 @@ public class EmployeeObject2 {
     private Map<String, Object> account;
     private List<String> colors;
     private double star;
-
 }

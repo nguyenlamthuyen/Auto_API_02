@@ -9,6 +9,4 @@ public class EmployeeObject {
     private AccountObject account;
     private List<String> colors;
     private double star;
-
-
 }

@@ -86,13 +86,57 @@ public class Chapter2 {
     @Test
     void nested_object_changed_using_object() {
         NestedObject2 nestedObject = new NestedObject2();
-        nestedObject.setData(new ObjectA());
+        nestedObject.setData(new ObjectB());
         nestedObject.setString("Hi");
 
         given().log().all()
                 .contentType(ContentType.JSON)
                 .header("access-token", "fgdfgd.tyhttyt.jytjtjt")
                 .body(nestedObject)
+                .post("https://postman-echo.com/post");
+    }
+
+    @Test
+    void nested_object_changed_using_object_2() {
+        NestedObject3 nestedObject = new NestedObject3();
+        nestedObject.setData(new ObjectC());
+        nestedObject.setString("Hi");
+
+        given().log().all()
+                .contentType(ContentType.JSON)
+                .header("access-token", "fgdfgd.tyhttyt.jytjtjt")
+                .body(nestedObject)
+                .post("https://postman-echo.com/post");
+    }
+
+    @Test
+    void optional_object() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("machine", "honda");
+        data.put("created_time", 2020);
+
+        OptionalObject optionalObject = new OptionalObject();
+        optionalObject.setData(data);
+//        optionalObject.set_Admin(true);
+
+        given().log().all()
+                .contentType(ContentType.JSON)
+                .header("access-token", "fgdfgd.tyhttyt.jytjtjt")
+                .body(optionalObject)
+                .post("https://postman-echo.com/post");
+    }
+
+    @Test
+    void empty_object() {
+
+        EmptyObject emptyObject = new EmptyObject();
+        emptyObject.setData(new DataObject());
+        emptyObject.setString("hi");
+
+        given().log().all()
+                .contentType(ContentType.JSON)
+                .header("access-token", "fgdfgd.tyhttyt.jytjtjt")
+                .body(emptyObject)
                 .post("https://postman-echo.com/post");
     }
 }
