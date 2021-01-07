@@ -5,15 +5,16 @@ import com.tibco.models.QueryLogicObject;
 import com.tibco.models.QueryObject;
 import com.tibco.models.TargetObject;
 import io.restassured.http.ContentType;
+import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.*;
 
 public class Chapter4 {
 
@@ -71,7 +72,36 @@ public class Chapter4 {
                 .asString();
 
         List<String> authors = JsonPath.from(res)
-                .getList("json.store.book.findAll {it}.author");
+                .getList("json.store.book.findAll {it.price > 10 && it.price < 20}.author");
         authors.forEach(System.out::println);
+    }
+
+    @Test
+    void test_6() {
+        given().contentType(ContentType.JSON)
+                .body(new File("src/test/resources/books.json"))
+                .post("https://postman-echo.com/post")
+                .then()
+                .body("json.store.book.findAll {it.price > 10 && it.price < 20}.author",
+                        everyItem(equalTo("Evelyn Waugh")));
+    }
+
+    @Test
+    void test_7() {
+        Response response = given().contentType(ContentType.JSON)
+                .body(new File("src/test/resources/books.json"))
+                .post("https://postman-echo.com/post");
+        response.prettyPeek();
+        Headers headers = response.getHeaders();
+        String date = headers.getValue("Date");
+        System.out.println("date = " + date);
+
+    }
+
+    @Test
+    void assert_schema() {
+        Response response = given().contentType(ContentType.JSON)
+                .get("https://run.mocky.io/v3/060803e9-f05f-420e-97ad-49a1dba5cd5a");
+        response.then().body(matcher)
     }
 }
